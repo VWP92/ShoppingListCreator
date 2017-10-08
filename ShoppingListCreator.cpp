@@ -45,16 +45,17 @@ public:
 	vector<groceries> list; //Vector Groceries stored in
 
 	void printList(vector<groceries> &x, vector<itemType> &y) { //Print list of items and quantity
-		/*for (int i = 0; i < x.size(); i++) {
-			cout << x[i].item.quantity << " " << x[i].item.name << " (" << x[i].item.aisleNumber.aisle.typeName << ")" << endl;
-		}*/
-		//cout << "List exported to file." << endl << endl;
-
+		cout << "-------------------------" << endl;
 		cout << "(Item's sorted by Aisle)" << endl;
 		for (int i = 0; i < y.size(); i++){ //sorts items by aisle in store
+			int aislePrinted = 0;
 			for (int o = 0; o < x.size(); o++) {
 				if (y[i].aisle.typeNum == x[o].item.aisleNumber.aisle.typeNum){
-					cout << x[o].item.quantity << " " << x[o].item.name << " (" << x[o].item.aisleNumber.aisle.typeName << ")" << endl;
+					aislePrinted++;
+					if (aislePrinted == 1){ //Aisle will print once on top of items belonging to that aisle
+						cout << "(" << "Aisle " << i + 1 << ")" << x[o].item.aisleNumber.aisle.typeName << ":" << endl;
+					}
+					cout << x[o].item.quantity << " " << x[o].item.name << endl;
 				}
 			}
 		}
@@ -68,10 +69,8 @@ public:
 		int typeNum; //Take number from user's selection
 
 		cout << "Enter name for new entry: ";
-		//cin >> name;
 		getline(cin, name);
 		cout << "How many?(Text Acceped): ";
-		//cin >> quantity;
 		getline(cin, quantity);
 		cout << endl;
 		for (int i = 0; i < y.size(); i++) { //Prints item type choices
