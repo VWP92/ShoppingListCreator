@@ -10,12 +10,12 @@ using namespace std;
 
 class itemType { 
 public:
-	struct aisle { //Items will be seperated by aisle using this struct
+	struct aisleStruct { //Items will be seperated by aisle using this struct
 		int typeNum;
 		string typeName;
 	};
 
-	aisle aisle;
+	aisleStruct aisle;
 
 	vector<itemType> itemAisle;
 
@@ -46,7 +46,7 @@ public:
 
 	void printList(vector<groceries> &x, vector<itemType> &y) { //Print list of items and quantity
 		cout << "-------------------------" << endl;
-		cout << "(Item's sorted by Aisle)" << endl;
+		cout << "(Item's sorted by Aisle)" << endl << endl;
 		for (int i = 0; i < y.size(); i++){ //sorts items by aisle in store
 			int aislePrinted = 0;
 			for (int o = 0; o < x.size(); o++) {
@@ -91,7 +91,7 @@ public:
 		for (int i = 0; i < x.size(); i++) {
 			cout << (i + 1) << ": " << x[i].item.quantity << " " << x[i].item.name << endl;
 		}
-		cout << "Type item number you would like to delete: ";
+		cout << endl << "Type item number you would like to delete: ";
 		cin >> y;
 		x.erase(x.begin() + (y-1));
 	}
@@ -99,16 +99,16 @@ public:
 
 void mainMenu() { //Menu that shows on program start up
 	cout << "-------------------------" << endl;
-	cout << "ShoppingListCreator!" << endl << endl;
 	cout << "Options: " << endl;
 	cout << "1 adds items" << endl;
 	cout << "2 deletes items" << endl;
 	cout << "3 prints items" << endl;
-	cout << "-------------------------" << endl;
+	cout << endl;
 	cout << "Enter number for option you wish to select:  ";
 }
 
 int main() {
+	cout << "ShoppingListCreator!" << endl;
 	char again = 'y';
 	int choice;
 	type.createAisle(type.itemAisle);
