@@ -8,15 +8,14 @@
 
 using namespace std;
 
-class itemType { 
-public:
+class itemType {
 	struct aisleStruct { //Items will be seperated by aisle using this struct
 		int typeNum;
 		string typeName;
 	};
-
-	aisleStruct aisle;
-
+	
+public:
+    aisleStruct aisle;
 	vector<itemType> itemAisle;
 
 	void createAisle(vector<itemType> &x) { //Creates vector that contains Aisle options
@@ -29,21 +28,24 @@ public:
 			itemAisle.push_back(y);
 		}
 	}
+	
 } type;
 
 class groceries {
-
 	struct itemStruct { //Parameters items contain
 		string name;
 		string quantity;
 		itemType aisleNumber;
 	};
-
-	itemStruct item;
-
+	
 public:
+	itemStruct item;
 	vector<groceries> list; //Vector Groceries stored in
+	
+} groc;
 
+class menuOptions: public groceries, public itemType {
+public:
 	void printList(vector<groceries> &x, vector<itemType> &y) { //Print list of items and quantity
 		cout << "-------------------------" << endl;
 		cout << "(Item's sorted by Aisle)" << endl << endl;
@@ -95,7 +97,8 @@ public:
 		cin >> y;
 		x.erase(x.begin() + (y-1));
 	}
-} groc;
+	
+} menu;
 
 void mainMenu() { //Menu that shows on program start up
 	cout << "-------------------------" << endl;
@@ -116,20 +119,20 @@ int main() {
 	while (again == 'y') {
 		mainMenu();
 		cin >> choice;
-		cin.ignore(numeric_limits<streamsize>::max(), '\n');
+		cin.get();
 		while (choice != 1 && choice != 2 && choice != 3) { //Trap choices outside of options
 			cout << "Please choose options 1 to 3: ";
 			cin >> choice;
-			cin.ignore(numeric_limits<streamsize>::max(), '\n');
+			cin.get();
 		}
 		if (choice == 1) {
-			groc.addItem(groc.list, type.itemAisle);
+			menu.addItem(groc.list, type.itemAisle);
 		}
 		else if (choice == 2) {
-			groc.deleteItem(groc.list);
+			menu.deleteItem(groc.list);
 		}
 		else if (choice == 3) {
-			groc.printList(groc.list,type.itemAisle);
+			menu.printList(groc.list, type.itemAisle);
 		}
 		cout << "-------------------------" << endl;
 		cout << "Would you like to continue?(y/n): ";
@@ -141,4 +144,5 @@ int main() {
 	}
 	return 0;
 }
+
 
