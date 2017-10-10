@@ -5,6 +5,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <fstream>
 
 using namespace std;
 
@@ -98,14 +99,36 @@ public:
 		x.erase(x.begin() + (y-1));
 	}
 	
+	void createFile(vector<groceries> &x, vector<itemType> &y){
+		ofstream outFile;
+		outFile.open("shoppinglist.txt");
+		
+		for (int i = 0; i < y.size(); i++){ //sorts items by aisle in store
+			int aislePrinted = 0;
+			for (int o = 0; o < x.size(); o++) {
+				if (y[i].aisle.typeNum == x[o].item.aisleNumber.aisle.typeNum){
+					aislePrinted++;
+					if (aislePrinted == 1){ //Aisle will print once on top of items belonging to that aisle
+						outFile << "(" << "Aisle " << i + 1 << ")" << x[o].item.aisleNumber.aisle.typeName << ":" << endl;
+					}
+					outFile << x[o].item.quantity << " " << x[o].item.name << endl;
+				}
+			}
+		}
+		outFile.close();
+		cout << "-------------------------" << endl;
+		cout << "Grocery list exported to 'shoppinglist.txt'." << endl;
+	}
+	
 } menu;
 
 void mainMenu() { //Menu that shows on program start up
 	cout << "-------------------------" << endl;
 	cout << "Options: " << endl;
-	cout << "1 adds items" << endl;
-	cout << "2 deletes items" << endl;
-	cout << "3 prints items" << endl;
+	cout << "1 Adds items" << endl;
+	cout << "2 Deletes items" << endl;
+	cout << "3 Displays items" << endl;
+	cout << "4 Exports List to txt File" << endl;
 	cout << endl;
 	cout << "Enter number for option you wish to select:  ";
 }
@@ -120,8 +143,8 @@ int main() {
 		mainMenu();
 		cin >> choice;
 		cin.get();
-		while (choice != 1 && choice != 2 && choice != 3) { //Trap choices outside of options
-			cout << "Please choose options 1 to 3: ";
+		while (choice != 1 && choice != 2 && choice != 3 && choice != 4) { //Trap choices outside of options
+			cout << "Please choose options 1 to 4: ";
 			cin >> choice;
 			cin.get();
 		}
@@ -133,6 +156,9 @@ int main() {
 		}
 		else if (choice == 3) {
 			menu.printList(groc.list, type.itemAisle);
+		}
+		else if (choice == 4){
+			menu.createFile(groc.list, type.itemAisle);
 		}
 		cout << "-------------------------" << endl;
 		cout << "Would you like to continue?(y/n): ";
